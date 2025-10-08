@@ -16,7 +16,7 @@ interface Language {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './header-membre.component.html',
-  styleUrl: './header-membre.component.css'
+  styleUrls: ['./header-membre.component.css']
 })
 export class HeaderMembreComponent implements OnInit {
   currentRoute: string = '/apropos'; // Défaut à "A propos"
@@ -29,25 +29,23 @@ export class HeaderMembreComponent implements OnInit {
   ];
   currentLanguage: Language = this.languages[0];
 
+  // Menu mobile
+  mobileMenuOpen = false;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private languageService: LanguageService
   ) {
-    // Déterminer la route actuelle ou définir par défaut
     this.currentRoute = this.router.url || '/apropos';
-    
-    // Si on est sur la route racine, rediriger vers apropos
     if (this.currentRoute === '/' || this.currentRoute === '') {
       this.currentRoute = '/apropos';
     }
   }
 
   ngOnInit(): void {
-    // Initialiser la langue actuelle
     this.initializeLanguage();
 
-    // Écouter les changements de route pour mettre à jour l'état actif
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
@@ -64,7 +62,6 @@ export class HeaderMembreComponent implements OnInit {
     if (foundLanguage) {
       this.currentLanguage = foundLanguage;
     } else {
-      // Défaut français
       this.currentLanguage = this.languages[0];
       this.languageService.setLanguage('fr');
     }
@@ -72,58 +69,50 @@ export class HeaderMembreComponent implements OnInit {
 
   private updateCurrentRoute(url: string): void {
     let newRoute = url;
-    
-    // Si on est sur la route racine, considérer que c'est apropos
     if (newRoute === '/' || newRoute === '') {
       newRoute = '/apropos';
     }
-    
     this.currentRoute = newRoute;
     console.log('Route actuelle:', this.currentRoute);
   }
 
-  // Méthodes de navigation améliorées
+  // Navigation
   navigateToPropos(): void {
     if (this.currentRoute !== '/apropos') {
-      console.log('Navigation vers apropos');
       this.router.navigate(['/apropos']);
+      this.mobileMenuOpen = false;
     }
   }
 
   navigateToStatistique(): void {
     if (this.currentRoute !== '/statistique') {
-      console.log('Navigation vers statistique');
       this.router.navigate(['/statistique']);
+      this.mobileMenuOpen = false;
     }
   }
 
   navigateToMedia(): void {
     if (this.currentRoute !== '/media') {
-      console.log('Navigation vers media');
       this.router.navigate(['/media']);
+      this.mobileMenuOpen = false;
     }
   }
 
   navigateToHoraire(): void {
     if (this.currentRoute !== '/horaire') {
-      console.log('Navigation vers horaire');
       this.router.navigate(['/horaire']);
+      this.mobileMenuOpen = false;
     }
   }
 
-  // Méthodes de gestion des langues
+  // Langues
   toggleLanguagePopup(event?: Event): void {
-    if (event) {
-      event.stopPropagation();
-    }
+    if (event) event.stopPropagation();
     this.showLanguagePopup = !this.showLanguagePopup;
   }
 
   selectLanguage(languageCode: string, event?: Event): void {
-    if (event) {
-      event.stopPropagation();
-    }
-
+    if (event) event.stopPropagation();
     const selectedLanguage = this.languages.find(lang => 
       lang.code.toLowerCase() === languageCode.toLowerCase()
     );
@@ -131,52 +120,31 @@ export class HeaderMembreComponent implements OnInit {
     if (selectedLanguage && this.currentLanguage.code !== selectedLanguage.code) {
       this.currentLanguage = selectedLanguage;
       this.showLanguagePopup = false;
-
-      // Changer la langue dans le service
       this.languageService.setLanguage(languageCode.toLowerCase());
       console.log(`Langue changée vers: ${selectedLanguage.name}`);
-
-      // Ici vous pouvez ajouter d'autres actions comme recharger les traductions
-      // this.reloadTranslations();
     } else {
       this.showLanguagePopup = false;
     }
   }
 
-  // Fermer la popup en cliquant à l'extérieur
+  // Gestion clic en dehors pour fermer popup
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
-    if (this.showLanguagePopup) {
-      const target = event.target as HTMLElement;
-      const isLanguageSelector = target.closest('.language-selector');
-      const isLanguagePopup = target.closest('.language-popup');
-      
-      if (!isLanguageSelector && !isLanguagePopup) {
-        this.showLanguagePopup = false;
-      }
-    }
-  }
-
-  // Fermer la popup avec la touche Échap
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscapeKey(event: KeyboardEvent): void {
-    if (this.showLanguagePopup) {
+    const target = event.target as HTMLElement;
+    const isLanguageSelector = target.closest('.language-selector');
+    const isLanguagePopup = target.closest('.language-popup');
+    if (this.showLanguagePopup && !isLanguageSelector && !isLanguagePopup) {
       this.showLanguagePopup = false;
     }
   }
 
-  // Méthode pour déterminer si un onglet est actif
-  isActiveTab(route: string): boolean {
-    const isActive = this.currentRoute === route;
-    return isActive;
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapeKey(event: KeyboardEvent): void {
+    if (this.showLanguagePopup) this.showLanguagePopup = false;
+    if (this.mobileMenuOpen) this.mobileMenuOpen = false;
   }
 
-  // Méthode utilitaire pour recharger les traductions (à adapter selon votre implémentation)
-  private reloadTranslations(): void {
-    // Implémentez cette méthode selon votre système de traduction
-    // Exemple avec ngx-translate :
-    // this.translate.use(this.currentLanguage.code.toLowerCase()).subscribe(() => {
-    //   console.log('Traductions rechargées');
-    // });
+  isActiveTab(route: string): boolean {
+    return this.currentRoute === route;
   }
 }

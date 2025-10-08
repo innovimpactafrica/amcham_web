@@ -1,155 +1,174 @@
-<!-- Header -->
-<header class="bg-[#1D365D] text-white px-6 py-2">
-    <div class="flex items-center justify-between">
-      <h1 class="text-lg font-medium relative left-16">Plateforme AmCham - Réseau des Chambres de Commerce Américaines</h1>
-      <div class="flex items-center">
-        
-        <!-- Sélecteur de langue -->
-        <div class="language-selector relative relative right-16">
-          <button 
-            (click)="toggleLanguagePopup()"
-            class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-[#2a4a7a] transition-colors duration-200 cursor-pointer"
-          >
-            <img [src]="currentLanguage.flag" [alt]="currentLanguage.code" class="w-5 h-4">
-            <span class="text-sm">{{ currentLanguage.code }}</span>
-            <svg class="w-4 h-4 transition-transform duration-200" 
-                 [class.rotate-180]="showLanguagePopup"
-                 fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-            </svg>
-          </button>
-          
-          <!-- Popup de sélection de langue -->
-          <div 
-          *ngIf="showLanguagePopup" 
-          class="absolute top-full right-0 mt-1 w-64 bg-gradient-to-b from-[#4a5a7a] to-[#2a3a5a] rounded-lg shadow-lg overflow-hidden z-50">
-          <div class="p-4">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="text-white font-medium">Changer la langue</h3>
-              <button 
-                (click)="toggleLanguagePopup()" 
-                class="text-gray-300 hover:text-white">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-              </button>
-            </div>
-            
-            <!-- Option Français -->
-            <div 
-              (click)="selectLanguage('fr')" 
-              class="flex items-center justify-between p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/20 transition-colors"
-              [class.border-2]="currentLanguage.code === 'FR'"
-              [class.border-red-500]="currentLanguage.code === 'FR'">
-              <div class="flex items-center space-x-3">
-                <img src="https://flagcdn.com/w20/fr.png" alt="Français" class="w-5 h-5 rounded-sm">
-                <span class="text-white">Français</span>
-              </div>
-              <div 
-                *ngIf="currentLanguage.code === 'FR'" 
-                class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                </svg>
-              </div>
-            </div>
-            
-            <!-- Option Anglais -->
-            <div 
-              (click)="selectLanguage('en')" 
-              class="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-black/20 transition-colors"
-              [class.border-2]="currentLanguage.code === 'EN'"
-              [class.border-red-500]="currentLanguage.code === 'EN'">
-              <div class="flex items-center space-x-3">
-                <img src="https://flagcdn.com/w20/gb.png" alt="English" class="w-5 h-5 rounded-sm">
-                <span class="text-white">Anglais</span>
-              </div>
-              <div 
-                *ngIf="currentLanguage.code === 'EN'" 
-                class="w-5 h-5 border-2 border-gray-400 rounded-full">
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
+<!-- Barre de langue -->
+<div class="bg-[#132742] h-10 sm:h-12">
+  <div class="w-[90%] mx-auto flex justify-between items-center h-full text-xs sm:text-sm">
+    <div class="text-white truncate">
+      <span class="hidden sm:inline">Plateforme AmCham - Réseau des Chambres de Commerce Américaines</span>
+      <span class="sm:hidden">Plateforme AmCham</span>
     </div>
-    
-    <!-- Overlay pour fermer la popup en cliquant à l'extérieur -->
-    <div *ngIf="showLanguagePopup" 
-         (click)="showLanguagePopup = false"
-         class="fixed inset-0 z-40 bg-transparent"></div>
-  </header>
-  
-  <!-- Navigation et header company -->
-  <div class="bg-white shadow-sm">
-    <div class="max-w-7xl mx-auto px-6 ">
-      <!-- Logo et navigation -->
-      <div class="flex items-center justify-between py-4 ">
-        <div class="flex items-center">
-          <img src="/assets/logo.png" alt="AMCHAM" class="h-12 mr-8 relative right-48">
-          
-          <!-- Navigation tabs -->
-          <nav class="flex space-x-8">
-            <a (click)="navigateToPropos()" 
-               [class]="isActiveTab('/apropos') ? 
-                        'flex items-center px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer' : 
-                        'flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer'">
 
-                   <svg class="w-6 h-6 mr-2" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12.5 10H12.51M12.5 14H12.51M12.5 6H12.51M16.5 10H16.51M16.5 14H16.51M16.5 6H16.51M8.5 10H8.51M8.5 14H8.51M8.5 6H8.51M9.5 22V19C9.5 18.7348 9.60536 18.4804 9.79289 18.2929C9.98043 18.1054 10.2348 18 10.5 18H14.5C14.7652 18 15.0196 18.1054 15.2071 18.2929C15.3946 18.4804 15.5 18.7348 15.5 19V22" stroke="#646B78" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M18.5 2H6.5C5.39543 2 4.5 2.89543 4.5 4V20C4.5 21.1046 5.39543 22 6.5 22H18.5C19.6046 22 20.5 21.1046 20.5 20V4C20.5 2.89543 19.6046 2 18.5 2Z" stroke="#646B78" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-              A Propos
-            </a>
-            
-            <a (click)="navigateToMedia()" 
-               [class]="isActiveTab('/media') ? 
-                        'flex items-center px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer' : 
-                        'flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer'">
-             
-            <svg  class="w-6 h-6 mr-2" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21.5 3.6V20.4C21.5 20.5591 21.4368 20.7117 21.3243 20.8243C21.2117 20.9368 21.0591 21 20.9 21H4.1C3.94087 21 3.78826 20.9368 3.67574 20.8243C3.56321 20.7117 3.5 20.5591 3.5 20.4V3.6C3.5 3.44087 3.56321 3.28826 3.67574 3.17574C3.78826 3.06321 3.94087 3 4.1 3H20.9C21.0591 3 21.2117 3.06321 21.3243 3.17574C21.4368 3.28826 21.5 3.44087 21.5 3.6Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M3.5 16L10.5 13L21.5 18M16.5 10C15.9696 10 15.4609 9.78929 15.0858 9.41421C14.7107 9.03914 14.5 8.53043 14.5 8C14.5 7.46957 14.7107 6.96086 15.0858 6.58579C15.4609 6.21071 15.9696 6 16.5 6C17.0304 6 17.5391 6.21071 17.9142 6.58579C18.2893 6.96086 18.5 7.46957 18.5 8C18.5 8.53043 18.2893 9.03914 17.9142 9.41421C17.5391 9.78929 17.0304 10 16.5 10Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              Médias
-            </a>
-            
-            <a (click)="navigateToHoraire()" 
-               [class]="isActiveTab('/horaire') ? 
-                        'flex items-center px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer' : 
-                        'flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer'">
-         <svg class="w-6 h-6 mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2ZM12 4C9.87827 4 7.84344 4.84285 6.34315 6.34315C4.84285 7.84344 4 9.87827 4 12C4 14.1217 4.84285 16.1566 6.34315 17.6569C7.84344 19.1571 9.87827 20 12 20C14.1217 20 16.1566 19.1571 17.6569 17.6569C19.1571 16.1566 20 14.1217 20 12C20 9.87827 19.1571 7.84344 17.6569 6.34315C16.1566 4.84285 14.1217 4 12 4ZM12 6C12.2449 6.00003 12.4813 6.08996 12.6644 6.25272C12.8474 6.41547 12.9643 6.63975 12.993 6.883L13 7V11.586L15.707 14.293C15.8863 14.473 15.9905 14.7144 15.9982 14.9684C16.006 15.2223 15.9168 15.4697 15.7488 15.6603C15.5807 15.8508 15.3464 15.9703 15.0935 15.9944C14.8406 16.0185 14.588 15.9454 14.387 15.79L14.293 15.707L11.293 12.707C11.1376 12.5514 11.0378 12.349 11.009 12.131L11 12V7C11 6.73478 11.1054 6.48043 11.2929 6.29289C11.4804 6.10536 11.7348 6 12 6Z" fill="#252525"/>
-            </svg>
-            
-              Horaires
-            </a>
-            
-            <a (click)="navigateToStatistique()" 
-               [class]="isActiveTab('/statistique') ? 
-                        'flex items-center px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer' : 
-                        'flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer'">
-             <svg class="w-6 h-6 mr-2" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.64331 15.857H6.07031V9.43H8.64231V15.858L8.64331 15.857ZM13.7863 15.857H11.2143V3H13.7863V15.857ZM18.9283 15.857H16.3573V6.857H18.9283V15.857Z" fill="#252525"/>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M21.5 20.7141H3.5V18.7141H21.5V20.7141Z" fill="#252525"/>
-                </svg>
-                
-              Statistiques
-            </a>
-          </nav>
-        </div>
-        
-        <!-- Company info in header -->
-        <div class="flex items-center relative left-[14%] ">
-          <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center mr-3">
-            <img class="h-10 w-10 rounded-[50%] " src="../assets/logoW.png" alt="">
+    <div class="relative language-selector border border-white/20 py-1 px-2 rounded-lg">
+      <button (click)="toggleLanguagePopup()"
+        class="text-white text-xs sm:text-sm flex items-center space-x-1 sm:space-x-2 hover:opacity-80 transition-opacity">
+        <img [src]="currentLanguage.flag" alt="" class="w-4 h-4 rounded-sm">
+        <span class="hidden sm:inline">{{ currentLanguage.code }}</span>
+        <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      <!-- Popup langue -->
+      <div *ngIf="showLanguagePopup"
+        class="absolute top-full right-0 mt-1 w-48 sm:w-64 bg-gradient-to-b from-[#4a5a7a] to-[#2a3a5a] rounded-lg shadow-lg overflow-hidden z-50">
+        <div class="p-3 sm:p-4">
+          <div class="flex justify-between items-center mb-3 sm:mb-4">
+            <h3 class="text-white font-medium text-sm sm:text-base">Langue</h3>
+            <button (click)="toggleLanguagePopup()" class="text-gray-300 hover:text-white">
+              <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
-          <div>
-            <h2 class="font-semibold text-gray-900">Global Tech Solutions</h2>
-            <p class="text-sm text-gray-500">Technologie</p>
+
+          <div (click)="selectLanguage('fr')"
+            class="flex items-center justify-between p-2 sm:p-3 rounded-lg mb-2 cursor-pointer hover:bg-black/20 transition-colors"
+            [class.border-2]="currentLanguage.code === 'FR'" [class.border-red-500]="currentLanguage.code === 'FR'">
+            <div class="flex items-center space-x-3">
+              <img src="https://flagcdn.com/w20/fr.png" alt="Français" class="w-5 h-5 rounded-sm">
+              <span class="text-white text-sm">Français</span>
+            </div>
+            <div *ngIf="currentLanguage.code === 'FR'" class="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+              <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+
+          <div (click)="selectLanguage('en')"
+            class="flex items-center justify-between p-2 sm:p-3 rounded-lg cursor-pointer hover:bg-black/20 transition-colors"
+            [class.border-2]="currentLanguage.code === 'EN'" [class.border-red-500]="currentLanguage.code === 'EN'">
+            <div class="flex items-center space-x-3">
+              <img src="https://flagcdn.com/w20/gb.png" alt="English" class="w-5 h-5 rounded-sm">
+              <span class="text-white text-sm">Anglais</span>
+            </div>
+            <div *ngIf="currentLanguage.code === 'EN'" class="w-4 h-4 border-2 border-gray-400 rounded-full"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Header principal -->
+<header class="bg-white text-[#1D365D]  px-4 py-2 flex items-center justify-between md:hidden relative z-50">
+  <!-- Logo -->
+  <img src="/assets/logoAmcham.png" alt="AMCHAM" class="h-10">
+
+  <!-- Profil utilisateur -->
+  <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center">
+    <img class="h-8 w-8 rounded-full" src="../assets/logoW.png" alt="User">
+  </div>
+
+  <!-- Hamburger menu -->
+  <button (click)="mobileMenuOpen = !mobileMenuOpen" class="focus:outline-none">
+    <svg *ngIf="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+    <svg *ngIf="mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+
+  <!-- Mobile menu overlay -->
+  <div *ngIf="mobileMenuOpen" class="fixed inset-0 z-40 bg-black/50" (click)="mobileMenuOpen=false"></div>
+
+  <!-- Mobile navigation drawer -->
+  <div *ngIf="mobileMenuOpen" class="fixed top-0 right-0 w-64 h-full bg-white z-50 shadow-lg flex flex-col">
+    <div class="p-4 flex justify-between items-center border-b">
+      <h2 class="font-semibold text-gray-900">Menu</h2>
+      <button (click)="mobileMenuOpen=false" class="text-gray-600 hover:text-gray-900">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="flex flex-col p-4 space-y-2">
+      <a (click)="navigateToPropos(); mobileMenuOpen=false" class="text-gray-700 hover:text-red-600 font-medium">A Propos</a>
+      <a (click)="navigateToMedia(); mobileMenuOpen=false" class="text-gray-700 hover:text-red-600 font-medium">Médias</a>
+      <a (click)="navigateToHoraire(); mobileMenuOpen=false" class="text-gray-700 hover:text-red-600 font-medium">Horaires</a>
+      <a (click)="navigateToStatistique(); mobileMenuOpen=false" class="text-gray-700 hover:text-red-600 font-medium">Statistiques</a>
+
+      <!-- Langue -->
+      <div class="mt-4">
+        <p class="text-gray-500 mb-2">Langue</p>
+        <div class="flex flex-col space-y-2">
+          <button (click)="selectLanguage('fr'); mobileMenuOpen=false" class="flex items-center justify-between p-2 rounded hover:bg-gray-100"
+                  [class.font-bold]="currentLanguage.code==='FR'">
+            <div class="flex items-center space-x-2">
+              <img src="https://flagcdn.com/w20/fr.png" alt="Français" class="w-5 h-4">
+              <span>Français</span>
+            </div>
+            <span *ngIf="currentLanguage.code==='FR'" class="text-red-500">✔</span>
+          </button>
+          <button (click)="selectLanguage('en'); mobileMenuOpen=false" class="flex items-center justify-between p-2 rounded hover:bg-gray-100"
+                  [class.font-bold]="currentLanguage.code==='EN'">
+            <div class="flex items-center space-x-2">
+              <img src="https://flagcdn.com/w20/gb.png" alt="English" class="w-5 h-4">
+              <span>Anglais</span>
+            </div>
+            <span *ngIf="currentLanguage.code==='EN'" class="text-red-500">✔</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Navigation et company info -->
+<div class="bg-white shadow-sm hidden md:block">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row items-center justify-between py-4 space-y-4 sm:space-y-0">
+      <!-- Logo + navigation -->
+      <div class="flex flex-col sm:flex-row items-center w-full sm:w-auto space-y-2 sm:space-y-0 sm:space-x-6">
+        <!-- Logo -->
+        <img src="/assets/logo.png" alt="AMCHAM" class="h-10 sm:h-12">
+
+        <!-- Navigation tabs -->
+        <nav class="flex flex-wrap space-x-2 sm:space-x-4 md:space-x-6 overflow-x-auto whitespace-nowrap">
+          <a (click)="navigateToPropos()" 
+             [class]="isActiveTab('/apropos') ? 'flex items-center px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer' : 
+                                              'flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer'">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 25 24">
+              <path d="M12.5 10H12.51M12.5 14H12.51M12.5 6H12.51M16.5 10H16.51M16.5 14H16.51M16.5 6H16.51M8.5 10H8.51M8.5 14H8.51M8.5 6H8.51M9.5 22V19C9.5 18.7348 9.60536 18.4804 9.79289 18.2929C9.98043 18.1054 10.2348 18 10.5 18H14.5C14.7652 18 15.0196 18.1054 15.2071 18.2929C15.3946 18.4804 15.5 18.7348 15.5 19V22" stroke="#646B78" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M18.5 2H6.5C5.39543 2 4.5 2.89543 4.5 4V20C4.5 21.1046 5.39543 22 6.5 22H18.5C19.6046 22 20.5 21.1046 20.5 20V4C20.5 2.89543 19.6046 2 18.5 2Z" stroke="#646B78" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            A Propos
+          </a>
+          <a (click)="navigateToMedia()" [class]="isActiveTab('/media') ? 'flex items-center px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer' : 'flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer'">
+            Médias
+          </a>
+          <a (click)="navigateToHoraire()" [class]="isActiveTab('/horaire') ? 'flex items-center px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer' : 'flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer'">
+            Horaires
+          </a>
+          <a (click)="navigateToStatistique()" [class]="isActiveTab('/statistique') ? 'flex items-center px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer' : 'flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer'">
+            Statistiques
+          </a>
+        </nav>
+      </div>
+
+      <!-- Company info -->
+      <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-900 rounded-full flex items-center justify-center">
+          <img class="h-8 w-8 sm:h-10 sm:w-10 rounded-full" src="../assets/logoW.png" alt="">
+        </div>
+        <div class="text-center sm:text-left">
+          <h2 class="font-semibold text-sm sm:text-base md:text-lg text-gray-900">Global Tech Solutions</h2>
+          <p class="text-xs sm:text-sm md:text-base text-gray-500">Technologie</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
