@@ -739,6 +739,22 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/membre', membreId]);
   }
 
+  openImageFull(imagePath: string) {
+  const url = 'https://wakana.online/repertoire_amchams/' + imagePath;
+  window.open(url, '_blank');
+}
+lightboxImage: string | null = null;
+
+openLightbox(imagePath: string) {
+  this.lightboxImage = imagePath;
+}
+
+closeLightbox() {
+  this.lightboxImage = null;
+}
+
+
+
   voirToutesActualites() {
     this.router.navigate(['/actualites']);
   }

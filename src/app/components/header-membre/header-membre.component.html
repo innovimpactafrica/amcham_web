@@ -1,4 +1,4 @@
-<!-- Barre de langue -->
+<!-- Barre de langue (inchangée) -->
 <div class="bg-[#132742] h-10 sm:h-12">
   <div class="w-[90%] mx-auto flex justify-between items-center h-full text-xs sm:text-sm">
     <div class="text-white truncate">
@@ -36,7 +36,8 @@
               <img src="https://flagcdn.com/w20/fr.png" alt="Français" class="w-5 h-5 rounded-sm">
               <span class="text-white text-sm">Français</span>
             </div>
-            <div *ngIf="currentLanguage.code === 'FR'" class="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+            <div *ngIf="currentLanguage.code === 'FR'"
+              class="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
               <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
                   d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -60,8 +61,9 @@
   </div>
 </div>
 
-<!-- Header principal -->
-<header class="bg-white text-[#1D365D]  px-4 py-2 flex items-center justify-between md:hidden relative z-50">
+<!-- Header principal fixé -->
+<header
+  class="sticky top-0 bg-white shadow-sm border-b z-40 text-[#1D365D] px-4 py-2 flex items-center justify-between md:hidden">
   <!-- Logo -->
   <img src="/assets/logoAmcham.png" alt="AMCHAM" class="h-10">
 
@@ -73,93 +75,118 @@
   <!-- Hamburger menu -->
   <button (click)="mobileMenuOpen = !mobileMenuOpen" class="focus:outline-none">
     <svg *ngIf="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
     </svg>
     <svg *ngIf="mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
     </svg>
   </button>
 
-  <!-- Mobile menu overlay -->
+  <!-- Overlay -->
   <div *ngIf="mobileMenuOpen" class="fixed inset-0 z-40 bg-black/50" (click)="mobileMenuOpen=false"></div>
 
-  <!-- Mobile navigation drawer -->
+  <!-- Drawer -->
   <div *ngIf="mobileMenuOpen" class="fixed top-0 right-0 w-64 h-full bg-white z-50 shadow-lg flex flex-col">
     <div class="p-4 flex justify-between items-center border-b">
       <h2 class="font-semibold text-gray-900">Menu</h2>
       <button (click)="mobileMenuOpen=false" class="text-gray-600 hover:text-gray-900">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
     </div>
 
-    <!-- Navigation Links -->
     <nav class="flex flex-col p-4 space-y-2">
-      <a (click)="navigateToPropos(); mobileMenuOpen=false" class="text-gray-700 hover:text-red-600 font-medium">A Propos</a>
-      <a (click)="navigateToMedia(); mobileMenuOpen=false" class="text-gray-700 hover:text-red-600 font-medium">Médias</a>
-      <a (click)="navigateToHoraire(); mobileMenuOpen=false" class="text-gray-700 hover:text-red-600 font-medium">Horaires</a>
-      <a (click)="navigateToStatistique(); mobileMenuOpen=false" class="text-gray-700 hover:text-red-600 font-medium">Statistiques</a>
-
-      <!-- Langue -->
-      <div class="mt-4">
-        <p class="text-gray-500 mb-2">Langue</p>
-        <div class="flex flex-col space-y-2">
-          <button (click)="selectLanguage('fr'); mobileMenuOpen=false" class="flex items-center justify-between p-2 rounded hover:bg-gray-100"
-                  [class.font-bold]="currentLanguage.code==='FR'">
-            <div class="flex items-center space-x-2">
-              <img src="https://flagcdn.com/w20/fr.png" alt="Français" class="w-5 h-4">
-              <span>Français</span>
-            </div>
-            <span *ngIf="currentLanguage.code==='FR'" class="text-red-500">✔</span>
-          </button>
-          <button (click)="selectLanguage('en'); mobileMenuOpen=false" class="flex items-center justify-between p-2 rounded hover:bg-gray-100"
-                  [class.font-bold]="currentLanguage.code==='EN'">
-            <div class="flex items-center space-x-2">
-              <img src="https://flagcdn.com/w20/gb.png" alt="English" class="w-5 h-4">
-              <span>Anglais</span>
-            </div>
-            <span *ngIf="currentLanguage.code==='EN'" class="text-red-500">✔</span>
-          </button>
-        </div>
-      </div>
+      <a (click)="navigateToPropos(); mobileMenuOpen=false" class="text-gray-700 hover:text-red-600 font-medium">A
+        Propos</a>
+      <a (click)="navigateToMedia(); mobileMenuOpen=false"
+        class="text-gray-700 hover:text-red-600 font-medium">Médias</a>
+      <a (click)="navigateToHoraire(); mobileMenuOpen=false"
+        class="text-gray-700 hover:text-red-600 font-medium">Horaires</a>
+      <a (click)="navigateToStatistique(); mobileMenuOpen=false"
+        class="text-gray-700 hover:text-red-600 font-medium">Statistiques</a>
     </nav>
   </div>
 </header>
 
-<!-- Navigation et company info -->
-<div class="bg-white shadow-sm hidden md:block">
+<!-- Header desktop (fixé aussi) -->
+<div class="sticky top-0 bg-white shadow-sm border-b z-40 hidden md:block">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col sm:flex-row items-center justify-between py-4 space-y-4 sm:space-y-0">
-      <!-- Logo + navigation -->
       <div class="flex flex-col sm:flex-row items-center w-full sm:w-auto space-y-2 sm:space-y-0 sm:space-x-6">
-        <!-- Logo -->
-        <img src="/assets/logo.png" alt="AMCHAM" class="h-10 sm:h-12">
-
-        <!-- Navigation tabs -->
-        <nav class="flex flex-wrap space-x-2 sm:space-x-4 md:space-x-6 overflow-x-auto whitespace-nowrap">
-          <a (click)="navigateToPropos()" 
-             [class]="isActiveTab('/apropos') ? 'flex items-center px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer' : 
-                                              'flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer'">
-            <svg class="w-5 h-5 sm:w-6 sm:h-6 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 25 24">
-              <path d="M12.5 10H12.51M12.5 14H12.51M12.5 6H12.51M16.5 10H16.51M16.5 14H16.51M16.5 6H16.51M8.5 10H8.51M8.5 14H8.51M8.5 6H8.51M9.5 22V19C9.5 18.7348 9.60536 18.4804 9.79289 18.2929C9.98043 18.1054 10.2348 18 10.5 18H14.5C14.7652 18 15.0196 18.1054 15.2071 18.2929C15.3946 18.4804 15.5 18.7348 15.5 19V22" stroke="#646B78" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M18.5 2H6.5C5.39543 2 4.5 2.89543 4.5 4V20C4.5 21.1046 5.39543 22 6.5 22H18.5C19.6046 22 20.5 21.1046 20.5 20V4C20.5 2.89543 19.6046 2 18.5 2Z" stroke="#646B78" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            A Propos
-          </a>
-          <a (click)="navigateToMedia()" [class]="isActiveTab('/media') ? 'flex items-center px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer' : 'flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer'">
-            Médias
-          </a>
-          <a (click)="navigateToHoraire()" [class]="isActiveTab('/horaire') ? 'flex items-center px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer' : 'flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer'">
-            Horaires
-          </a>
-          <a (click)="navigateToStatistique()" [class]="isActiveTab('/statistique') ? 'flex items-center px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer' : 'flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer'">
-            Statistiques
-          </a>
-        </nav>
+        <img src="/assets/logoAmcham.png" alt="AMCHAM" class="h-10 sm:h-12">
       </div>
 
-      <!-- Company info -->
+      <nav class="flex flex-wrap space-x-2 sm:space-x-4 md:space-x-6 overflow-x-auto whitespace-nowrap">
+        <a (click)="navigateToPropos()" [class]="
+    isActiveTab('/apropos') 
+      ? 'flex items-center space-x-2 px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer transition-colors duration-200' 
+      : 'flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer transition-colors duration-200'
+  ">
+          <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5">
+            <path
+              d="M9 9H9.01M9 13H9.01M9 5H9.01M13 9H13.01M13 13H13.01M13 5H13.01M5 9H5.01M5 13H5.01M5 5H5.01M6 21V18C6 17.7348 6.10536 17.4804 6.29289 17.2929C6.48043 17.1054 6.73478 17 7 17H11C11.2652 17 11.5196 17.1054 11.7071 17.2929C11.8946 17.4804 12 17.7348 12 18V21"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M15 1H3C1.89543 1 1 1.89543 1 3V19C1 20.1046 1.89543 21 3 21H15C16.1046 21 17 20.1046 17 19V3C17 1.89543 16.1046 1 15 1Z"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+          <span>A Propos</span>
+        </a>
+
+        <a (click)="navigateToMedia()" [class]="
+    isActiveTab('/media') 
+      ? 'flex items-center space-x-2 px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer transition-colors duration-200' 
+      : 'flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer transition-colors duration-200'
+  ">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5">
+            <path
+              d="M19 1.6V18.4C19 18.5591 18.9368 18.7117 18.8243 18.8243C18.7117 18.9368 18.5591 19 18.4 19H1.6C1.44087 19 1.28826 18.9368 1.17574 18.8243C1.06321 18.7117 1 18.5591 1 18.4V1.6C1 1.44087 1.06321 1.28826 1.17574 1.17574C1.28826 1.06321 1.44087 1 1.6 1H18.4C18.5591 1 18.7117 1.06321 18.8243 1.17574C18.9368 1.28826 19 1.44087 19 1.6Z"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M1 14L8 11L19 16M14 8C13.4696 8 12.9609 7.78929 12.5858 7.41421C12.2107 7.03914 12 6.53043 12 6C12 5.46957 12.2107 4.96086 12.5858 4.58579C12.9609 4.21071 13.4696 4 14 4C14.5304 4 15.0391 4.21071 15.4142 4.58579C15.7893 4.96086 16 5.46957 16 6C16 6.53043 15.7893 7.03914 15.4142 7.41421C15.0391 7.78929 14.5304 8 14 8Z"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+          <span>Médias</span>
+        </a>
+
+        <a (click)="navigateToHoraire()" [class]="
+    isActiveTab('/horaire') 
+      ? 'flex items-center space-x-2 px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer transition-colors duration-200' 
+      : 'flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer transition-colors duration-200'
+  ">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5">
+            <path
+              d="M10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0ZM10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2ZM10 4C10.2449 4.00003 10.4813 4.08996 10.6644 4.25272C10.8474 4.41547 10.9643 4.63975 10.993 4.883L11 5V9.586L13.707 12.293C13.8863 12.473 13.9905 12.7144 13.9982 12.9684C14.006 13.2223 13.9168 13.4697 13.7488 13.6603C13.5807 13.8508 13.3464 13.9703 13.0935 13.9944C12.8406 14.0185 12.588 13.9454 12.387 13.79L12.293 13.707L9.293 10.707C9.13758 10.5514 9.03776 10.349 9.009 10.131L9 10V5C9 4.73478 9.10536 4.48043 9.29289 4.29289C9.48043 4.10536 9.73478 4 10 4Z"
+              fill="currentColor" />
+          </svg>
+
+          <span>Horaires</span>
+        </a>
+
+        <a (click)="navigateToStatistique()" [class]="
+    isActiveTab('/statistique') 
+      ? 'flex items-center space-x-2 px-3 py-2 text-red-600 border-b-2 border-red-600 font-medium cursor-pointer transition-colors duration-200' 
+      : 'flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-gray-900 cursor-pointer transition-colors duration-200'
+  ">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5">
+            <path
+              d="M8.14331 15.857H5.57031V9.43H8.14231V15.858L8.14331 15.857ZM13.2863 15.857H10.7143V3H13.2863V15.857ZM18.4283 15.857H15.8573V6.857H18.4283V15.857Z"
+              fill="currentColor" />
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M21 20.7141H3V18.7141H21V20.7141Z" fill="currentColor" />
+          </svg>
+
+          <span>Statistiques</span>
+        </a>
+
+      </nav>
+
       <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3">
         <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-900 rounded-full flex items-center justify-center">
           <img class="h-8 w-8 sm:h-10 sm:w-10 rounded-full" src="../assets/logoW.png" alt="">

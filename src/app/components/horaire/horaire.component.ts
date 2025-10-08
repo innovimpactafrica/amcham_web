@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterOutlet } from '@angular/router';
 import { HeaderMembreComponent } from "../header-membre/header-membre.component";
 import { LanguageService } from '../../../services/language.service';
-import { CompanyService, CompanySchedule } from '../../../services/company.service'; // Import du service et de l'interface
+import { AuthService } from '../../../services/auth.service';
+import { CompanyService, CompanySchedule, Company } from '../../../services/company.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -19,9 +20,14 @@ export class HoraireComponent implements OnInit, OnDestroy {
   currentRoute: string;
   private langSubscription!: Subscription;
   currentLang = 'fr';
-  companySchedules: CompanySchedule[] = []; // Pour stocker les horaires récupérés
+  companySchedules: CompanySchedule[] = [];
   loading = false;
   error = '';
+  isLoading = true;
+  errorMessage = '';
+  
+  // Données dynamiques de l'entreprise
+  companyData: Company | null = null;
 
   // Mapping des jours de la semaine entre anglais et français
   private dayMapping: { [key: string]: string } = {
@@ -69,7 +75,9 @@ export class HoraireComponent implements OnInit, OnDestroy {
       profilePreview: 'Aperçu du profil public',
       profileWarning: 'Votre profil n\'est pas encore visible par le public. Complétez vos informations pour activer votre profil.',
       loading: 'Chargement des horaires...',
-      errorLoading: 'Erreur lors du chargement des horaires'
+      errorLoading: 'Erreur lors du chargement des horaires',
+      errorLoadingCompany: 'Erreur lors du chargement des informations de l\'entreprise',
+      noCompanyError: 'Aucune entreprise associée à votre compte'
     } : {
       title: 'Opening Hours',
       day: 'Day',
@@ -93,24 +101,29 @@ export class HoraireComponent implements OnInit, OnDestroy {
       profilePreview: 'Public profile preview',
       profileWarning: 'Your profile is not yet visible to the public. Complete your information to activate your profile.',
       loading: 'Loading schedules...',
-      errorLoading: 'Error loading schedules'
+      errorLoading: 'Error loading schedules',
+      errorLoadingCompany: 'Error loading company information',
+      noCompanyError: 'No company associated with your account'
     };
   }
 
-  // Données de l'entreprise avec traductions
-  get companyData() {
-    return this.currentLang === 'fr' ? {
-      name: 'Global Tech Solutions',
-      sector: 'Finance',
-      address: '123 Innovation Street, Boston, MA 02110',
-      phone: '+1 555-123-4567',
-      website: 'www.exemple.us'
-    } : {
-      name: 'Global Tech Solutions',
-      sector: 'Finance',
-      address: '123 Innovation Street, Boston, MA 02110',
-      phone: '+1 555-123-4567',
-      website: 'www.example.us'
+  // Données de l'entreprise avec traductions dynamiques
+  get dynamicCompanyData() {
+    if (this.companyData) {
+      return {
+        name: this.companyData.name || this.texts.companyName,
+        sector: this.companyData.sector || this.texts.companySector,
+        address: this.companyData.address || this.texts.companyAddress,
+        phone: this.companyData.telephone || this.texts.companyPhone,
+        website: this.companyData.webLink || this.texts.companyWebsite
+      };
+    }
+    return {
+      name: this.texts.companyName,
+      sector: this.texts.companySector,
+      address: this.texts.companyAddress,
+      phone: this.texts.companyPhone,
+      website: this.texts.companyWebsite
     };
   }
 
@@ -118,7 +131,8 @@ export class HoraireComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private languageService: LanguageService,
-    private companyService: CompanyService // Injection du service
+    private authService: AuthService,
+    private companyService: CompanyService
   ) {
     this.currentRoute = this.router.url;
   }
@@ -133,7 +147,7 @@ export class HoraireComponent implements OnInit, OnDestroy {
     this.currentLang = this.languageService.getCurrentLanguage();
     
     this.initializeForm();
-    this.loadCompanySchedules(); // Charger les horaires de l'entreprise
+    this.loadCompanyData(); // Charger d'abord les données de l'entreprise
   }
 
   ngOnDestroy(): void {
@@ -143,25 +157,119 @@ export class HoraireComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Charger les données de l'entreprise depuis l'API
+   */
+  private loadCompanyData(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+    
+    // Vérifier d'abord qu'on a un token valide
+    if (!this.authService.isAuthenticated()) {
+      this.errorMessage = this.currentLang === 'fr'
+        ? 'Session expirée. Veuillez vous reconnecter.'
+        : 'Session expired. Please log in again.';
+      this.isLoading = false;
+      this.router.navigate(['/login']);
+      return;
+    }
+    
+    // Récupérer d'abord les informations utilisateur depuis l'API
+    this.authService.getCurrentUserFromAPI().subscribe({
+      next: (currentUser) => {
+        console.log('Utilisateur récupéré avec succès:', currentUser);
+        
+        // Vérifier si l'utilisateur a une entreprise associée
+        if (!currentUser.companyId) {
+          this.errorMessage = this.texts.noCompanyError;
+          this.isLoading = false;
+          return;
+        }
+
+        // Ici, currentUser.companyId est défini, on peut l'utiliser comme number
+        const companyId = currentUser.companyId;
+
+        // Charger les données de l'entreprise avec le companyId récupéré
+        this.companyService.getCompanyById(companyId).subscribe({
+          next: (company) => {
+            console.log('Entreprise chargée avec succès:', company);
+            this.companyData = company;
+            this.loadCompanySchedules(companyId); // Charger les horaires après avoir l'entreprise
+          },
+          error: (error) => {
+            console.error('Erreur lors du chargement de l\'entreprise:', error);
+            this.errorMessage = this.texts.errorLoadingCompany;
+            this.isLoading = false;
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération des informations utilisateur:', error);
+        
+        // Gestion spécifique des erreurs d'authentification
+        if (error.status === 401 || error.status === 403) {
+          this.errorMessage = this.currentLang === 'fr'
+            ? 'Session expirée. Redirection vers la page de connexion...'
+            : 'Session expired. Redirecting to login page...';
+          
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
+        } else {
+          this.errorMessage = this.currentLang === 'fr'
+            ? 'Erreur lors de la récupération de vos informations utilisateur'
+            : 'Error retrieving your user information';
+        }
+        
+        this.isLoading = false;
+        
+        // En cas d'erreur non-authentification, on peut essayer de fallback sur les données locales
+        if (error.status !== 401 && error.status !== 403) {
+          const localUser = this.authService.getCurrentUser();
+          if (localUser?.companyId) {
+            console.log('Tentative avec les données locales...');
+            this.loadCompanyFromLocalUser(localUser.companyId);
+          }
+        }
+      }
+    });
+  }
+
+  /**
+   * Méthode de fallback pour charger l'entreprise depuis les données locales
+   */
+  private loadCompanyFromLocalUser(companyId: number): void {
+    this.companyService.getCompanyById(companyId).subscribe({
+      next: (company) => {
+        this.companyData = company;
+        this.loadCompanySchedules(companyId);
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement de l\'entreprise (fallback):', error);
+        this.errorMessage = this.texts.errorLoadingCompany;
+        this.isLoading = false;
+      }
+    });
+  }
+
+  /**
    * Charger les horaires de l'entreprise depuis l'API
    */
-  public loadCompanySchedules(): void {
+  private loadCompanySchedules(companyId: number): void {
     this.loading = true;
     this.error = '';
-    
-    // Remplacez 1 par l'ID réel de l'entreprise (peut-être depuis le service d'authentification ou les paramètres de route)
-    const companyId = 1;
     
     this.companyService.getHoraire(companyId).subscribe({
       next: (schedules: CompanySchedule[]) => {
         this.companySchedules = schedules;
         this.updateFormWithSchedules(schedules);
         this.loading = false;
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Erreur lors du chargement des horaires:', error);
         this.error = this.texts.errorLoading;
         this.loading = false;
+        this.isLoading = false;
       }
     });
   }
@@ -323,5 +431,17 @@ export class HoraireComponent implements OnInit, OnDestroy {
 
   resetForm(): void {
     this.initializeForm();
+    // Recharger les horaires depuis l'API
+    const localUser = this.authService.getCurrentUser();
+    if (localUser?.companyId) {
+      this.loadCompanySchedules(localUser.companyId);
+    }
+  }
+
+  /**
+   * Méthode publique pour recharger les données (utilisée par le template)
+   */
+  public reloadData(): void {
+    this.loadCompanyData();
   }
 }

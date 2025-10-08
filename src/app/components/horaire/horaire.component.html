@@ -2,137 +2,144 @@
 <router-outlet></router-outlet>
 <app-header-membre></app-header-membre>
 
-  <!-- Container principal -->
-  <div class="min-h-screen bg-gray-50 ">
-
+<!-- Container principal -->
+<div class="min-h-screen bg-gray-50">
   
-    <!-- Contenu principal -->
-    <div class="w-[92%] mx-auto px-6 py-8">
-      <div class="flex gap-8">
-        <!-- Sidebar gauche -->
-        <div class="w-80 space-y-6">
-          <!-- Info company card -->
-          <div class="bg-white rounded-lg shadow-sm p-6">
-            <div class="flex items-center mb-4">
-              <div class="w-12 h-12 bg-blue-900 rounded-full flex items-center justify-center mr-4">
-                <img class="h-12 w-12 rounded-[50%]" src="../assets/logoW.png" alt="">
-              </div>
-              <div>
-                <h3 class="font-semibold text-gray-900">{{ companyData.name }}</h3>
-                <p class="text-sm text-gray-500">{{ companyData.sector }}</p>
-              </div>
+  <!-- Contenu principal -->
+  <div class="w-[92%] mx-auto px-6 py-8">
+    <div class="flex gap-8">
+      <!-- Sidebar gauche -->
+      <div class="w-80 space-y-6">
+        <!-- Info company card -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-blue-900 rounded-full flex items-center justify-center mr-4">
+              <img class="h-12 w-12 rounded-[50%]" [src]="'https://wakana.online/repertoire_amchams/' + companyData?.logo" alt="">
             </div>
-            
-            <div class="space-y-3 text-sm text-gray-600">
-              <div class="flex items-center">
-                <svg class="w-4 h-4 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                </svg>
-                {{ companyData.address }}
-              </div>
-              <div class="flex items-center">
-                <svg class="w-4 h-4 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-                </svg>
-                {{ companyData.phone }}
-              </div>
-              <div class="flex items-center">
-                <svg class="w-4 h-4 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"></path>
-                </svg>
-                {{ companyData.website }}
-              </div>
+            <div>
+              <h3 class="font-semibold text-gray-900">{{ companyData?.name }}</h3>
+              <p class="text-sm text-gray-500">{{ companyData?.sector }}</p>
             </div>
-  
-            <!-- Profile visibility alert -->
-            <div class="mt-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start">
-              <svg class="w-5 h-5 text-red-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+          </div>
+          
+          <div class="space-y-3 text-sm text-gray-600">
+            <div class="flex items-center">
+              <svg class="w-4 h-4 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
               </svg>
-              <div>
-                <p class="text-sm text-red-800 font-medium">{{ texts.profilePreview }}</p>
-                <p class="text-xs text-red-600 mt-1">{{ texts.profileWarning }}</p>
-              </div>
+              {{ companyData?.address }}
+            </div>
+            <div class="flex items-center">
+              <svg class="w-4 h-4 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+              </svg>
+              {{ companyData?.telephone }}
+            </div>
+            <div class="flex items-center">
+              <svg class="w-4 h-4 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"></path>
+              </svg>
+              {{ companyData?.webLink }}
             </div>
           </div>
         </div>
+
+<!-- Aperçu du profil public - Section séparée -->
+<div class="flex gap-4">
+  <!-- Carte aperçu (plus large) -->
+  <div class="bg-[#f8eced] rounded-lg p-4 flex-1">
+    <div class="flex items-center space-x-3">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M10 6.875C9.1712 6.875 8.37634 7.20424 7.79029 7.79029C7.20424 8.37634 6.875 9.1712 6.875 10C6.875 10.8288 7.20424 11.6237 7.79029 12.2097C8.37634 12.7958 9.1712 13.125 10 13.125C10.8288 13.125 11.6237 12.7958 12.2097 12.2097C12.7958 11.6237 13.125 10.8288 13.125 10C13.125 9.1712 12.7958 8.37634 12.2097 7.79029C11.6237 7.20424 10.8288 6.875 10 6.875ZM8.125 10C8.125 9.50272 8.32254 9.02581 8.67417 8.67417C9.02581 8.32254 9.50272 8.125 10 8.125C10.4973 8.125 10.9742 8.32254 11.3258 8.67417C11.6775 9.02581 11.875 9.50272 11.875 10C11.875 10.4973 11.6775 10.9742 11.3258 11.3258C10.9742 11.6775 10.4973 11.875 10 11.875C9.50272 11.875 9.02581 11.6775 8.67417 11.3258C8.32254 10.9742 8.125 10.4973 8.125 10Z" fill="#A91520"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.0003 2.70825C6.23866 2.70825 3.70449 4.96159 2.23366 6.87242L2.20783 6.90659C1.87449 7.33909 1.56866 7.73658 1.36116 8.20658C1.13866 8.71075 1.04199 9.25992 1.04199 9.99992C1.04199 10.7399 1.13866 11.2891 1.36116 11.7933C1.56949 12.2633 1.87533 12.6616 2.20783 13.0933L2.23449 13.1274C3.70449 15.0383 6.23866 17.2916 10.0003 17.2916C13.762 17.2916 16.2962 15.0383 17.767 13.1274L17.7928 13.0933C18.1262 12.6616 18.432 12.2633 18.6395 11.7933C18.862 11.2891 18.9587 10.7399 18.9587 9.99992C18.9587 9.25992 18.862 8.71075 18.6395 8.20658C18.4312 7.73658 18.1253 7.33909 17.7928 6.90659L17.7662 6.87242C16.2962 4.96159 13.762 2.70825 10.0003 2.70825ZM3.22533 7.63492C4.58199 5.87075 6.79199 3.95825 10.0003 3.95825C13.2087 3.95825 15.4178 5.87075 16.7753 7.63492C17.142 8.10992 17.3553 8.39325 17.4962 8.71159C17.6278 9.00992 17.7087 9.37408 17.7087 9.99992C17.7087 10.6258 17.6278 10.9899 17.4962 11.2883C17.3553 11.6066 17.1412 11.8899 16.7762 12.3649C15.417 14.1291 13.2087 16.0416 10.0003 16.0416C6.79199 16.0416 4.58283 14.1291 3.22533 12.3649C2.85866 11.8899 2.64533 11.6066 2.50449 11.2883C2.37283 10.9899 2.29199 10.6258 2.29199 9.99992C2.29199 9.37408 2.37283 9.00992 2.50449 8.71159C2.64533 8.39325 2.86033 8.10992 3.22533 7.63492Z" fill="#A91520"/>
+        </svg>
+        
+      <span class="text-[#A91520] font-semibold text-base">Aperçu du profil public</span>
+    </div>
+  </div>
   
-        <!-- Contenu principal - Horaires d'ouverture -->
-        <div class="flex-1">
-          <!-- État de chargement -->
-          <div *ngIf="loading" class="bg-white rounded-lg shadow-sm p-8">
-            <div class="flex flex-col items-center justify-center py-12">
-              <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-              <p class="text-gray-600 text-lg">{{ texts.loading }}</p>
+  <!-- Bouton éditer (petit et carré) -->
+  <button type="button" class="w-14 h-14 bg-white border border-[#f2dcde] rounded-lg hover:bg-gray-50 transition-colors duration-200 flex items-center justify-center flex-shrink-0">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4.16667 15.8333H5.35417L13.5 7.6875L12.3125 6.5L4.16667 14.6458V15.8333ZM2.5 17.5V13.9583L13.5 2.97917C13.6667 2.82639 13.8508 2.70833 14.0525 2.625C14.2542 2.54167 14.4658 2.5 14.6875 2.5C14.9092 2.5 15.1244 2.54167 15.3333 2.625C15.5422 2.70833 15.7228 2.83333 15.875 3L17.0208 4.16667C17.1875 4.31944 17.3092 4.5 17.3858 4.70833C17.4625 4.91667 17.5006 5.125 17.5 5.33333C17.5 5.55556 17.4619 5.7675 17.3858 5.96917C17.3097 6.17083 17.1881 6.35472 17.0208 6.52083L6.04167 17.5H2.5ZM12.8958 7.10417L12.3125 6.5L13.5 7.6875L12.8958 7.10417Z" fill="#A91520"/>
+    </svg>
+  </button>
+</div>
+      </div>
+
+      <!-- Contenu principal - Horaires d'ouverture -->
+      <div class="flex-1">
+        <!-- État de chargement -->
+        <div *ngIf="loading" class="bg-white rounded-lg shadow-sm p-8">
+          <div class="flex flex-col items-center justify-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+            <p class="text-gray-600 text-lg">{{ texts.loading }}</p>
+          </div>
+        </div>
+
+        <!-- Message d'erreur -->
+        <div *ngIf="error && !loading" class="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
+          <div class="flex items-start">
+            <svg class="w-6 h-6 text-red-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+            </svg>
+            <div>
+              <h3 class="text-red-800 font-medium text-lg mb-2">{{ texts.errorLoading }}</h3>
+              <p class="text-red-600">{{ error }}</p>
+              <button 
+                class="mt-3 px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors duration-200"
+              >
+                Réessayer
+              </button>
             </div>
           </div>
+        </div>
 
-          <!-- Message d'erreur -->
-          <div *ngIf="error && !loading" class="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
-            <div class="flex items-start">
-              <svg class="w-6 h-6 text-red-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
-              </svg>
-              <div>
-                <h3 class="text-red-800 font-medium text-lg mb-2">{{ texts.errorLoading }}</h3>
-                <p class="text-red-600">{{ error }}</p>
-                <button 
-                  (click)="loadCompanySchedules()"
-                  class="mt-3 px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors duration-200"
-                >
-                  Réessayer
-                </button>
-              </div>
-            </div>
-          </div>
+        <!-- Formulaire des horaires -->
+        <form [formGroup]="horaireForm" (ngSubmit)="onSubmit()" class="space-y-8" *ngIf="!loading && !error">
+          <!-- Section Horaires d'ouverture -->
+          <div class="bg-white rounded-lg shadow-sm p-8">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-8">{{ texts.title || "Horaires d'ouverture" }}</h2>
 
-          <!-- Formulaire des horaires -->
-          <form [formGroup]="horaireForm" (ngSubmit)="onSubmit()" class="space-y-8" *ngIf="!loading && !error">
-            <!-- Section Horaires d'ouverture -->
-            <div class="bg-white rounded-lg shadow-sm p-6">
-              <div class="flex justify-between items-center mb-6">
-                <h2 class="text-lg font-semibold text-gray-900">{{ texts.title }}</h2>
-         
-              </div>
-
-              <!-- En-tête du tableau -->
-              <div class="grid grid-cols-12 gap-4 px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 font-medium text-gray-900 mb-4">
-                <div class="col-span-3">{{ texts.day }}</div>
-                <div class="col-span-3 text-center">{{ texts.availability }}</div>
-                <div class="col-span-3">{{ texts.opening }}</div>
-                <div class="col-span-3">{{ texts.closing }}</div>
+            <!-- Table des horaires -->
+            <div class="space-y-1">
+              <!-- En-tête -->
+              <div class="grid grid-cols-12 gap-6 px-6 py-4 bg-gray-50 rounded-lg font-medium text-gray-700 text-base">
+                <div class="col-span-3">{{ texts.day || "Jour" }}</div>
+                <div class="col-span-3">{{ texts.availability || "Disponibilité" }}</div>
+                <div class="col-span-3">{{ texts.opening || "Ouverture" }}</div>
+                <div class="col-span-3">{{ texts.closing || "Fermeture" }}</div>
               </div>
 
               <!-- Lignes des jours -->
-              <div class="space-y-3">
-                <div *ngFor="let jour of joursSemaine" class="grid grid-cols-12 gap-4 px-4 py-3 border-b border-gray-200 last:border-b-0">
-                  <!-- Nom du jour -->
-                  <div class="col-span-3 flex items-center font-medium text-gray-900">
-                    {{ jour.nom }}
-                    <!-- Indicateur de jour fermé -->
-                    <span *ngIf="!horaireForm.get(jour.value + '_ouvert')?.value" class="ml-2 text-xs text-red-500 bg-red-50 px-2 py-1 rounded">
-                      Fermé
+              <div *ngFor="let jour of joursSemaine" class="grid grid-cols-12 gap-6 px-6 py-5 border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                <!-- Nom du jour -->
+                <div class="col-span-3 flex items-center">
+                  <span class="font-medium text-gray-900 text-base">{{ jour.nom }}</span>
+                </div>
+
+                <!-- Disponibilité avec checkbox -->
+                <div class="col-span-3 flex items-center">
+                  <label class="flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      [checked]="horaireForm.get(jour.value + '_ouvert')?.value"
+                      (change)="toggleJour(jour.value)"
+                      class="w-5 h-5 text-[#A91520] border-gray-300 rounded focus:ring-[#A91520] cursor-pointer"
+                      [style.accentColor]="'#A91520'"
+                    />
+                    <span class="ml-3 text-gray-700 text-base">
+                      {{ horaireForm.get(jour.value + '_ouvert')?.value ? 'Ouvert' : 'Fermé' }}
                     </span>
-                  </div>
+                  </label>
+                </div>
 
-                  <!-- Disponibilité -->
-                  <div class="col-span-3 flex items-center justify-center">
-                    <button
-                      type="button"
-                      (click)="toggleJour(jour.value)"
-                      [class]="horaireForm.get(jour.value + '_ouvert')?.value ? 
-                        'bg-green-100 text-green-800 border-green-200 hover:bg-green-200' : 
-                        'bg-red-100 text-red-800 border-red-200 hover:bg-red-200'"
-                      class="px-4 py-2 border rounded-lg text-sm font-medium transition-colors duration-200 w-full max-w-[120px] focus:outline-none focus:ring-2 focus:ring-offset-1"
-                      [class.focus:ring-green-500]="horaireForm.get(jour.value + '_ouvert')?.value"
-                      [class.focus:ring-red-500]="!horaireForm.get(jour.value + '_ouvert')?.value"
-                    >
-                      {{ horaireForm.get(jour.value + '_ouvert')?.value ? texts.open : texts.closed }}
-                    </button>
-                  </div>
-
-                  <!-- Heure d'ouverture -->
-                  <div class="col-span-3">
+                <!-- Heure d'ouverture -->
+                <div class="col-span-3 flex items-center">
+                  <div class="relative">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                    </svg>
                     <input
                       type="time"
                       [formControlName]="jour.value + '_ouverture'"
@@ -140,15 +147,20 @@
                       [class]="isFieldInvalid(jour.value + '_ouverture') ? 
                         'border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-500' : 
                         'border-gray-300 focus:border-blue-500 focus:ring-blue-500'"
-                      class="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed transition-colors duration-200"
+                      class="pl-10 pr-3 py-2.5 border rounded-lg shadow-sm focus:outline-none focus:ring-2 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors duration-200 text-base font-medium text-gray-700"
                     />
-                    <div *ngIf="isFieldInvalid(jour.value + '_ouverture')" class="text-red-500 text-xs mt-1">
-                      {{ getFieldError(jour.value + '_ouverture') }}
-                    </div>
                   </div>
+                  <div *ngIf="isFieldInvalid(jour.value + '_ouverture')" class="text-red-500 text-xs mt-1">
+                    {{ getFieldError(jour.value + '_ouverture') }}
+                  </div>
+                </div>
 
-                  <!-- Heure de fermeture -->
-                  <div class="col-span-3">
+                <!-- Heure de fermeture -->
+                <div class="col-span-3 flex items-center">
+                  <div class="relative">
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                    </svg>
                     <input
                       type="time"
                       [formControlName]="jour.value + '_fermeture'"
@@ -156,59 +168,41 @@
                       [class]="isFieldInvalid(jour.value + '_fermeture') ? 
                         'border-red-300 bg-red-50 focus:border-red-500 focus:ring-red-500' : 
                         'border-gray-300 focus:border-blue-500 focus:ring-blue-500'"
-                      class="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed transition-colors duration-200"
+                      class="pl-10 pr-3 py-2.5 border rounded-lg shadow-sm focus:outline-none focus:ring-2 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors duration-200 text-base font-medium text-gray-700"
                     />
-                    <div *ngIf="isFieldInvalid(jour.value + '_fermeture')" class="text-red-500 text-xs mt-1">
-                      {{ getFieldError(jour.value + '_fermeture') }}
-                    </div>
+                  </div>
+                  <div *ngIf="isFieldInvalid(jour.value + '_fermeture')" class="text-red-500 text-xs mt-1">
+                    {{ getFieldError(jour.value + '_fermeture') }}
                   </div>
                 </div>
-              </div>
-
-              <!-- Informations sur les données chargées -->
-              <div *ngIf="companySchedules.length > 0" class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <div class="flex items-start">
-                  <svg class="w-5 h-5 text-blue-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                  </svg>
-                  <div class="text-sm text-blue-700">
-                    <p class="font-medium">Données synchronisées avec l'API</p>
-                    <p class="mt-1">Les horaires affichés proviennent des données de votre entreprise. Vous pouvez les modifier et enregistrer les changements.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Boutons d'action en bas -->
-              <div class="flex justify-end space-x-3 pt-6 mt-6 border-t border-gray-200">
-                <button 
-                  type="button"
-                  (click)="resetForm()"
-                  class="px-6 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-1"
-                >
-                  {{ texts.cancel }}
-                </button>
-                <button 
-                  type="submit"
-                  [disabled]="horaireForm.invalid || loading"
-                  [class]="horaireForm.invalid || loading ? 
-                    'bg-gray-400 cursor-not-allowed' : 
-                    'hover:bg-blue-700 focus:ring-blue-500'"
-                  class="px-6 py-2 text-white font-medium rounded-lg text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1"
-                  style="background-color: #1D365D"
-                >
-                  <span *ngIf="!loading">{{ texts.saveButton }}</span>
-                  <span *ngIf="loading" class="flex items-center">
-                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Enregistrement...
-                  </span>
-                </button>
               </div>
             </div>
-          </form>
-        </div>
+
+        
+
+            <!-- Boutons d'action en bas -->
+            <div class="flex justify-end space-x-3 pt-6 mt-8">
+              <button 
+                type="submit"
+                [disabled]="horaireForm.invalid || loading"
+                [class]="horaireForm.invalid || loading ? 
+                  'bg-gray-400 cursor-not-allowed' : 
+                  'hover:bg-[#152844] focus:ring-[#1D365D]'"
+                class="px-8 py-3 bg-[#1D365D] text-white font-medium rounded-lg text-base transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2"
+              >
+                <span *ngIf="!loading">{{ texts.saveButton || "Enregistrer les modifications" }}</span>
+                <span *ngIf="loading" class="flex items-center">
+                  <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Enregistrement...
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+</div>
